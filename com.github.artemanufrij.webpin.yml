@@ -30,9 +30,16 @@ finish-args:
 # If we had external dependencies that weren't included in our SDK, we would list
 # them here.
 modules:
+    - name: flatpak-script
+      buildsystem: simple
+      build-commands:
+        - install -D flatpak.sh /app/bin/flatpak
+      sources:
+        - type: file
+          path: sources/flatpak.sh
+
     - name: webpin
       buildsystem: meson
       sources:
         - type: dir
           path: .
-          
