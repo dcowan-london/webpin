@@ -34,7 +34,7 @@ namespace Webpin {
                             Name=Webpin
                             GenericName=Web app
                             Comment=Webpin web app
-                            Exec=com.github.artemanufrij.webpin
+                            Exec=flatpak run com.github.artemanufrij.webpin
                             Keywords=webpin;webapp;internet;
                             Icon=application-default-icon
                             Terminal=false
@@ -49,7 +49,7 @@ namespace Webpin {
 
                             [Desktop Action Remove]
                             Name=Remove Webapp
-                            Exec=com.github.artemanufrij.webpin --remove
+                            Exec=flatpak run com.github.artemanufrij.webpin --remove
                             Icon=edit-delete-symbolic
                             """;
 
@@ -132,12 +132,12 @@ namespace Webpin {
             file.set_string ("Desktop Entry", "Name", name);
             file.set_string ("Desktop Entry", "GenericName", name);
             file.set_string ("Desktop Entry", "X-GNOME-FullName", name);
-            file.set_string ("Desktop Entry", "Exec", "com.github.artemanufrij.webpin " + url);
+            file.set_string ("Desktop Entry", "Exec", "flatpak run com.github.artemanufrij.webpin " + url);
             file.set_string ("Desktop Entry", "Icon", icon);
             file.set_string ("Desktop Entry", "StartupWMClass", url);
             file.set_string ("Desktop Entry", "X-Webpin-StayOpen", stay_open.to_string ());
             file.set_string ("Desktop Entry", "X-Webpin-View-Mode", minimal_ui ? "minimal" : "default");
-            file.set_string ("Desktop Action Remove", "Exec", "com.github.artemanufrij.webpin --remove " + url);
+            file.set_string ("Desktop Action Remove", "Exec", "flatpak run com.github.artemanufrij.webpin --remove " + url);
         }
 
         public DesktopFile.from_desktopappinfo (GLib.DesktopAppInfo info) {
@@ -151,7 +151,10 @@ namespace Webpin {
             this.name = info.get_display_name ();
             this.icon = info.get_icon ().to_string ();
             try {
-                this.url = file.get_string ("Desktop Entry", "Exec").substring (31);
+                // The exec string is "flatpak run com.github.artemanufrij.webpin [url]"
+                this.url = file.get_string ("Desktop Entry", "Exec");
+                var url = this.url.split(" ");
+                this.url = url[3];
             } catch (Error err) {
                 warning (err.message);
             }
