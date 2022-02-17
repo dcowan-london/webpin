@@ -25,6 +25,8 @@ finish-args:
   - '--filesystem=~/.var/app/com.github.artemanufrij.webpin/'
   # DRI - Direct Rendering - without this, rendering is really slow
   - '--device=dri'
+  # For temporary dev purposes
+  - '--filesystem=xdg-pictures/webpin:ro' 
 
 # This section is where you list all the source code required to build your app.
 # If we had external dependencies that weren't included in our SDK, we would list
