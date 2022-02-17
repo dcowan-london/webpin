@@ -23,7 +23,36 @@
 </p>
 
 
-## Install from Github.
+## Install from Github
+
+### With FlatPak
+Install the [elementaryOS developer enviroment](https://docs.elementary.io/develop/writing-apps/the-basic-setup#developer-sdk)
+
+Install dependencies
+```
+sudo apt install libwebkit2gtk-4.0-dev
+```
+
+Clone and enter repository
+```
+git clone https://github.com/artemanufrij/webpin.git
+cd webpin
+```
+
+Build with `flatpak-builder`
+```
+flatpak-builder build com.github.artemanufrij.webpin.yml --user --install --force-clean
+```
+
+#### Debugging
+[Debugging FlatPak Applications](https://docs.flatpak.org/en/latest/debugging.html)
+
+To enter the container
+```
+flatpak run --command=sh com.github.artemanufrij.webpin
+```
+
+### Legacy method
 
 As first you need elementary SDK
 ```
