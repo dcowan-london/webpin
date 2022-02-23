@@ -43,7 +43,7 @@ namespace Webpin.Widgets.Views {
         Gtk.CheckButton stay_open_when_closed;
         Gtk.CheckButton minimal_view_mode;
         Gtk.Popover icon_selector_popover;
-        Gtk.FileChooserDialog file_chooser;
+        Gtk.FileChooserNative file_chooser;
         Gtk.Button accept_button;
         Gtk.ColorButton primary_color_button;
         GLib.Regex protocol_regex;
@@ -432,10 +432,11 @@ namespace Webpin.Widgets.Views {
             filter.set_filter_name (_ ("Images"));
             filter.add_mime_type ("image/*");
 
-            file_chooser = new Gtk.FileChooserDialog (_("Choose icon"), WebpinApp.instance.mainwindow,
+            file_chooser = new Gtk.FileChooserNative (_("Choose icon"), WebpinApp.instance.mainwindow,
                                                       Gtk.FileChooserAction.OPEN,
-                                                      _ ("Cancel"), Gtk.ResponseType.CANCEL,
-                                                      _ ("Open"), Gtk.ResponseType.ACCEPT);
+                                                      _("Open"),
+                                                      _("Cancel"));
+
             file_chooser.set_select_multiple (false);
             file_chooser.add_filter (filter);
 
