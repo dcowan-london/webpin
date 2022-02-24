@@ -6,6 +6,8 @@
 
 [![Build Status](https://travis-ci.org/artemanufrij/webpin.svg?branch=master)](https://travis-ci.org/artemanufrij/webpin)
 
+Note: You can see current FlatPak dev updates at https://github.com/artemanufrij/webpin/issues/143
+
 ### Donate
 <a href="https://www.paypal.me/ArtemAnufrij">PayPal</a> | <a href="https://liberapay.com/Artem/donate">LiberaPay</a> | <a href="https://www.patreon.com/ArtemAnufrij">Patreon</a>
 
@@ -26,12 +28,7 @@
 ## Install from Github
 
 ### With FlatPak
-Install the [elementaryOS developer enviroment](https://docs.elementary.io/develop/writing-apps/the-basic-setup#developer-sdk)
-
-Install dependencies
-```
-sudo apt install libwebkit2gtk-4.0-dev
-```
+Install the [elementaryOS developer enviroment](https://docs.elementary.io/develop/writing-apps/the-basic-setup#flatpak)
 
 Clone and enter repository
 ```
@@ -47,7 +44,7 @@ flatpak-builder build com.github.artemanufrij.webpin.yml --user --install --forc
 #### Debugging
 [Debugging FlatPak Applications](https://docs.flatpak.org/en/latest/debugging.html)
 
-To enter the container
+To enter the container for debugging
 ```
 flatpak run --command=sh com.github.artemanufrij.webpin
 ```
