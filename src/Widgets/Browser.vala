@@ -35,6 +35,8 @@ namespace Webpin.Widgets {
         Gtk.Box container;
         Granite.Widgets.Toast app_notification;
         GLib.Icon icon_for_notification;
+        //  For saving downloads
+        Gtk.FileChooserNative file_chooser;
 
         public signal void external_request (WebKit.NavigationAction action);
         public signal void request_begin ();
@@ -163,6 +165,54 @@ namespace Webpin.Widgets {
                     return true;
                 }
                 return base.key_press_event (event);
+            });
+
+            web_view.web_context.download_started.connect ((event) => {
+                file_chooser = new Gtk.FileChooserNative (_("Choose download location"),
+                                                            WebpinApp.instance.mainwindow,
+                                                            Gtk.FileChooserAction.SAVE,
+                                                            _("Save"),
+                                                            _("Cancel"));
+
+                var download_dir = GLib.Environment.get_user_special_dir (GLib.UserDirectory.DOWNLOAD);
+
+                file_chooser.set_current_folder (download_dir);
+
+                event.decide_destination.connect ((download_event) => {
+                    file_chooser.set_current_name (download_event);
+
+                    if (file_chooser.run () == Gtk.ResponseType.ACCEPT) {
+                        var filename = file_chooser.get_filename ();
+
+                        event.set_destination (filename);
+                        warning (filename);
+                        file_chooser.destroy ();
+
+                        app_notification.title = _ ("Download successful");
+                        app_notification.send_notification ();
+
+                        return false;
+                    } else {
+                        app_notification.title = _ ("Download failed or was cancelled");
+                        app_notification.send_notification ();
+
+                        event.cancel ();
+
+                        return false;
+                    }
+                });
+
+                event.failed.connect((failed_event) => {
+                    error ("Download failed!");
+                });
+
+                event.created_destination.connect ((created_event) => {
+                    message ("Destination created successfully");
+                });
+
+                event.finished.connect ((finished_event) => {
+                    message ("Download finished successfully");
+                });
             });
         }
 
