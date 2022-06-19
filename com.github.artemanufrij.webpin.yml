@@ -23,6 +23,8 @@ finish-args:
   - '--share=network'
   - '--filesystem=xdg-data/applications:create'
   - '--filesystem=~/.var/app/com.github.artemanufrij.webpin/'
+    # Need this so that we can find the download dir
+  - '--filesystem=xdg-download:create'
   # DRI - Direct Rendering - without this, rendering is really slow
   - '--device=dri'
   
